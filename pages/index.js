@@ -5,8 +5,8 @@ import {
   OrkutNostalgicIconSet,
 } from "../src/lib/AlurakutCommons";
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
-//fazendo um componente, usar sempre o nome Maisuculo
-//pode conter css, js, html:
+// fazendo um componente, usar sempre o nome Maisuculo
+// pode conter css, js, html:
 
 function ProfileSidebar(props) {
   return (
