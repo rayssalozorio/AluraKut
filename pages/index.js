@@ -28,6 +28,28 @@ function ProfileSidebar(props) {
     </Box>
   );
 }
+
+function ProfileRelationsBox(propriedades) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {propriedades.title} ({propriedades.items.length})
+      </h2>
+      <ul>
+        {/* {seguidores.map((itemAtual) => {
+          return (
+            <li key={itemAtual}>
+              <a href={`https://github.com/${itemAtual}.png`}>
+                <img src={itemAtual.image} />
+                <span>{itemAtual.title}</span>
+              </a>
+            </li>
+          )
+        })} */}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  );
+}
 export default function Home() {
   const githubUser = "rayssalozorio";
   const [comunidades, setComunidades] = React.useState([
@@ -46,6 +68,17 @@ export default function Home() {
     "marcobrunodev",
     //"felipefialho",
   ];
+  const [seguidores, setSeguidores] = React.useState([]);
+  React.useEffect(function () {
+    fetch("https://api.github.com/users/peas/followers")
+      .then(function (respostaDoServidor) {
+        respostaDoServidor.json();
+      })
+      .then(function (respostaCompleta) {
+        console.log(respostaCompleta);
+      });
+  }, []);
+
   return (
     // no style tem que colocar o {} e abrir outro {}=objeto pra declarar
     //as propriedades que esta usando: fica assim: style={{}}
@@ -57,7 +90,7 @@ export default function Home() {
         </div>
         <div className="welcomeArea" style={{ gridArea: `welcomeArea` }}>
           <Box>
-            <h1 className="title">Bem vinda Rayssa</h1>
+            <h1 className="title">Bem vindo(a)</h1>
             <OrkutNostalgicIconSet />
           </Box>
 
@@ -99,8 +132,9 @@ export default function Home() {
           className="profileRelationsArea"
           style={{ gridArea: `profileRelationsArea` }}
         >
+          <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
-            <h2 className="smalltTitle">
+            <h2 className="smallTitle">
               Pessoas da Comunidade(
               {pessoasFavoritas.length <= 6 ? pessoasFavoritas.length : "6+"})
             </h2>
@@ -118,7 +152,7 @@ export default function Home() {
             </ul>
           </ProfileRelationsBoxWrapper>
           <ProfileRelationsBoxWrapper>
-            <h2 className="smalltTitle">Comunidades({comunidades.length})</h2>
+            <h2 className="smallTitle">Comunidades({comunidades.length})</h2>
             <ul>
               {comunidades.map((itemAtual) => {
                 return (
